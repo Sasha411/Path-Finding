@@ -9,3 +9,10 @@ Starting node is blue color, path is green and target node is red color.
 
 ![alt text](https://i.imgur.com/t1ngo6E.png)
 
+
+
+# Path-Finding V2
+
+-Added slider for taking input for number of obstruction
+
+![alt text](https://i.imgur.com/k7gQVFC.png)
