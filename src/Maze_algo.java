@@ -29,7 +29,7 @@ public class Maze_algo {
 	public ArrayList<ArrayList<Node>> solve() {
 		// TODO Auto-generated method stub
 		Comparator<Node> compare = new nodeComparator();
-		PriorityQueue<Node> open = new PriorityQueue<Node>(100,compare);
+		PriorityQueue<Node> open = new PriorityQueue<Node>(1000,compare);
 		
 		//Closed HashMap storing already visited Node
 		HashSet<Node> closed = new HashSet<Node>();
@@ -49,16 +49,14 @@ public class Maze_algo {
 		for(Node r: closed){
 			cld.add(r);
 		}
+		Node current = null;
 		while(!open.isEmpty()){
-			Node current = open.poll();
+			current = open.poll();
 			closed.add(current);
 			
 			if(current.equals(target)){
 				target.parent = current;
 				path = retracePath(target);
-				//for(Node temp: path){
-					//System.out.print("("+temp.x + " : " + temp.y + ") -> ");
-				//}
 				ans = 1;
 				break;
 			}
@@ -83,11 +81,11 @@ public class Maze_algo {
 				
 			}
 			
+			
 		}
 		if(ans == 0){
-			System.out.println("Path does not exist");
+			path = retracePath(current);
 		}
-		
 		//Grid requirements
 		pack.add(path);
 		pack.add(cld);
@@ -110,8 +108,8 @@ public class Maze_algo {
 	private static void closePath(HashSet<Node> closed) {
 		// TODO Auto-generated method stub
 		Random rand = new Random();
-		int total_closed = np;
-		//System.out.println(total_closed);
+		int total_closed = size*size*np;
+		total_closed = total_closed/100;
 		if(total_closed==0){
 			total_closed++;
 		}
@@ -129,17 +127,8 @@ public class Maze_algo {
 				i--;
 				continue;
 			}
-			for(Node temp: closed){
-				if(temp.x==randX && temp.y==randY){
-					i--;
-					continue;
-				}
-			}
 			closed.add(new Node(0,0,randX,randY));
 			i++;
-		}
-		for(Node temp: closed){
-			System.out.print(temp.x + " "+ temp.y + " => ");
 		}
 	}
 	private static ArrayList<Node> retracePath(Node target) {
