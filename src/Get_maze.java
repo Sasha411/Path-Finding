@@ -11,10 +11,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
-public class Get_maze extends JFrame implements ActionListener {
+public class Get_maze extends JFrame implements ActionListener,ChangeListener {
 	
 	int size;
 	int np;
@@ -33,6 +36,8 @@ public class Get_maze extends JFrame implements ActionListener {
 	JTextField sY = new JTextField();
 	JTextField tX = new JTextField();
 	JTextField tY = new JTextField();
+	
+	JSlider slider = new JSlider(0,80);
 
 	public Get_maze() {
 		// TODO Auto-generated constructor stub
@@ -43,12 +48,16 @@ public class Get_maze extends JFrame implements ActionListener {
 		output = new JButton("Output");
 		output.setFocusable(false);
 		output.addActionListener(this);
-		//
+		//Panel
 		JPanel panel = new JPanel();
 		
+		//Slider
+		slider = new JSlider(0,80);
+		slider.setPaintTicks(true);
+		slider.addChangeListener(this);
 		//label
 		JLabel gS = new JLabel();
-		gS.setText("Grid Size ");
+		gS.setText("Grid Size (Max Size:30)");
 		
 		JLabel stX = new JLabel();
 		stX.setText("Start X ");
@@ -69,10 +78,8 @@ public class Get_maze extends JFrame implements ActionListener {
 		sY = new JTextField();
 		tX = new JTextField();
 		tY = new JTextField();
-		cp = new JTextField();
 		sX.setPreferredSize(new Dimension(100,20));
 		sY.setPreferredSize(new Dimension(100,20));
-		cp.setPreferredSize(new Dimension(100,20));
 		tX.setPreferredSize(new Dimension(100,20));
 		tY.setPreferredSize(new Dimension(100,20));
 		jt = new JTextField();
@@ -82,7 +89,6 @@ public class Get_maze extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setLayout(new FlowLayout());
-		//panel.setBounds(61, 11, 81, 140);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		this.add(panel);
 		this.setSize(800,600);
@@ -90,7 +96,7 @@ public class Get_maze extends JFrame implements ActionListener {
 		panel.add(gS);
 		panel.add(jt);
 		panel.add(nW);
-		panel.add(cp);
+		panel.add(slider);
 		panel.add(stX);
 		panel.add(sX);
 		panel.add(stY);
@@ -107,7 +113,7 @@ public class Get_maze extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if(e.getSource()==button){
 			size = Integer.parseInt(jt.getText());
-			np = Integer.parseInt(cp.getText());
+			np = slider.getValue();
 			x1 = Integer.parseInt(sX.getText());
 			y1 = Integer.parseInt(sY.getText());
 			x2 = Integer.parseInt(tX.getText());
@@ -128,16 +134,18 @@ public class Get_maze extends JFrame implements ActionListener {
 			for(int i=1;i<=size;i++){
 				for(int j=1;j<=size;j++){
 					JButton cell = new JButton();
+					if(i==x1 && j==y1){
+						cell.setBackground(Color.blue);
+						grid.add(cell);
+						continue;
+					}
+					if(i==x2 && j==y2){
+						cell.setBackground(Color.red);
+						grid.add(cell);
+						continue;
+					}
 					if(contains(i,j,path.get(0))){
-						if(i==x1 && j==y1){
-							cell.setBackground(Color.blue);
-						}
-						else if(i==x2 && j==y2){
-							cell.setBackground(Color.red);
-						}
-						else{
 						cell.setBackground(Color.green);
-						}
 						grid.add(cell);
 						continue;
 					}
@@ -163,6 +171,11 @@ public class Get_maze extends JFrame implements ActionListener {
 			}
 		}
 		return false;
+	}
+
+	public void stateChanged(ChangeEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
