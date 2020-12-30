@@ -7,12 +7,10 @@ Run the program and fill all the required coordinates, size and number of obstru
 
 Starting node is blue color, path is green and target node is red color.
 
-![alt text](https://i.imgur.com/t1ngo6E.png)
+## GIF
 
+![alt text](https://media.giphy.com/media/4CSlamCMQsrZqqXBfR/giphy.gif)
 
-
-# Path-Finding V2
-
--Added slider for taking input for number of obstruction
+## Image
 
 ![alt text](https://i.imgur.com/k7gQVFC.png)
